@@ -8,6 +8,9 @@ function arrayOfNumbers(end = 100) {
 
 // using reduce, sum the numbers from 1 to 200
 // hint: use the arrayOfNumbers() function to generate an array
+const newArr = arrayOfNumbers(200); {
+  const sumOfNums = newArr.reduce((sum, num) => sum+num, 0);
+console.log(sumofNums,0);
 
 // https://jsonplaceholder.typicode.com/todos
 

@@ -4,7 +4,8 @@
     M001: MongoDB Basics : https://university.mongodb.com/courses/M001/about
     M220JS: MongoDB for Javascript Developers : https://university.mongodb.com/courses/M220JS/about
 */
-
+const express = require("express");
+const router = express.Router();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -130,3 +131,21 @@ app.use("/orders", orders);
 
 // Initialize the server
 app.listen(port, () => console.log(`Example app listening of port ${port}`));
+app.delete("/pizzas/:id", (request, response) => {
+  Pizza.findByIdAndRemove(req.params.id, {}, (error, data) => {
+    if (error) return response.sendStatus(500).json(error);
+    return response.json(data);
+  });
+});
+const mongoose = require("mongoose");
+const pizzaSchema = new mongoose.Schema({
+  crust: String,
+  cheese: String,
+  sauce: String,
+  toppings: [String]
+});
+const Pizza = mongoose.model("Pizza", pizzaSchema);
+module.exports = {
+  model: Pizza,
+  schema: pizzaSchema
+};

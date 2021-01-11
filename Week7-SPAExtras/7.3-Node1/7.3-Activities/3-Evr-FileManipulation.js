@@ -17,3 +17,4 @@ console.log(contents);
 
 // delete the temp directory
 fs.rmdirSync(tmp, { recursive: true });
+curl -v -X POST -d "JS Rocks" localhost:4040

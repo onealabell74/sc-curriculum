@@ -1,0 +1,50 @@
+const logging = (request, response, next) => {
+  console.log(`${request.method} ${request.url} ${Date.now()}`)
+  next()
+}
+const PORT = process.env.PORT || 4040
+app.listner(PORT, () => console.log(Listening on port ${port}));
+
+const express = require ("express");
+const bodyParser = require("body-parser);
+const mongoose = require("mongoose");
+
+
+mongoose.connect("mongodb://localhost/pizza");
+const db = mongoose.connection;
+let db_status = 'MongoDB connection not successful.'
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => db_status = 'Successfully opened connection to Mongo!')
+
+const db = mongoose.connections;
+const pizzaSchema = new mongoose.Schema({
+  crust: String,
+  cheese: String,
+  sauce: String,
+  toppings: [String]
+
+});
+const Pizza = mongoose.model("Pizza", pizzaSchema);
+app.post('/pizzas', (request, response) => {
+  const newPizza = new Pizza(request.body)
+  newPizza.save((err, pizza) => {
+    return err ? response.sendStatus(500).json(err) : response.json(pizza)
+  });
+});{
+	"crust": "thin",
+	"cheese": "mozzarella",
+	"sauce": "bbq",
+	"toppings": ["chicken", "onion"]
+}
+
+app.route("/").get ((request,response) => {
+  response.send("HELLO WORLD");
+}
+)
+
+app.get('/pizzas', (request, response) => {
+  Pizza.find({}, (error, data) => {
+    if (error) return res.sendStatus(500).json(error)
+    return res.json(data)
+  })
+})
